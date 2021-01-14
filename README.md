@@ -1,1 +1,1 @@
-# mnist-notebook
+# Neural Network
