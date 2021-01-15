@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="riznets", # Replace with your own username
-    version="0.0.1",
+    version="0.0.2",
     author="Richard Hu",
     author_email="r.hu@berkeley.edu",
     description="Make and train neural networks on MNIST and CIFAR-10",
