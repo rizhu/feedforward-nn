@@ -1,7 +1,7 @@
 import numpy as np
 
-from riznets import activation_functions as af
-from riznets import loss_functions as lf
+import activation_functions as af
+import loss_functions as lf
 
 class FFNN:
 
@@ -26,7 +26,7 @@ class FFNN:
         self.ran_on_test = False
 
         for i in range(1, len(layer_dims)):
-            self.weights.append(np.random.randn(layer_dims[i], layer_dims[i - 1]) / (FFNN.sqrt_2 / layer_dims[i - 1]))
+            self.weights.append(np.random.randn(layer_dims[i], layer_dims[i - 1]) * (FFNN.sqrt_2 / layer_dims[i - 1]))
             self.biases.append(np.zeros(layer_dims[i]))
             self.activations.append(af.activation[activations[i - 1]])
             self.activations_d.append(af.activation_d[activations[i - 1]])
@@ -99,7 +99,7 @@ class FFNN:
             return -1
 
         for i in range(1, len(self.weights)):
-            self.weights[i] = np.random.randn(self.weights[i].shape[0], self.weights[i].shape[1]) / (FFNN.sqrt_2 / self.weights[i].shape[1])
+            self.weights[i] = np.random.randn(self.weights[i].shape[0], self.weights[i].shape[1]) * (FFNN.sqrt_2 / self.weights[i].shape[1])
             self.biases[i] = np.zeros(self.biases[i].shape[0])
 
     def test(self, x_test: list, y_test: list):

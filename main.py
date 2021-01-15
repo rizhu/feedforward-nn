@@ -7,12 +7,13 @@ import tensorflow as tf
 import numpy as np
 import pickle
 
-from riznets import ffnn
-from riznets import loss_functions as lf
-from riznets import activation_functions as af
+import ffnn
+import loss_functions as lf
+import activation_functions as af
 
 CWD = os.getcwd()
 NN_PATH = os.path.join(CWD, "saved-neural-nets")
+HELP = os.path.join(CWD, "help.txt")
 
 if not os.path.isdir(NN_PATH):
     os.mkdir(NN_PATH)
@@ -25,7 +26,6 @@ print("MNIST dataset loaded")
 
 x_train_mnist = x_train_mnist.reshape(len(x_train_mnist), -1) / 255
 x_test_mnist = x_test_mnist.reshape(len(x_test_mnist), -1) / 255
-
 
 def net_exists(name: str):
     return os.path.isfile(os.path.join(NN_PATH, f"{name}.nn"))
@@ -58,6 +58,15 @@ def parse_exit(tokens):
         sys.exit(0)
     else:
         print(f"exit command takes no additional arguments but found {str(len(tokens) - 1)} arguments")
+
+def parse_help(tokens):
+    if not len(tokens) == 1:
+        print(f"ls command takes no additional arguments but found {str(len(tokens) - 1)} arguments")
+        return
+    else:
+        with open(HELP, 'r') as f:
+            help_text = f.read()
+        print(help_text)
 
 def parse_ls(tokens):
     if not len(tokens) == 1:
@@ -256,6 +265,7 @@ def parse_train_mnist(tokens):
 command_map = defaultdict(lambda: -1)
     
 command_map["exit"] = parse_exit
+command_map["help"] = parse_help
 command_map["create"] = parse_create
 command_map["delete"] = parse_delete
 command_map["train-mnist"] = parse_train_mnist

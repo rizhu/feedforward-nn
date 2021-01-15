@@ -1,0 +1,14 @@
+
+Complete list of riznets commands and their usages
+Required arguments are denotes like <this> and optional arguments are denoted like [this]
+
+managing neural networks
+    create          Create a new neural network
+    delete [name]   Deletes a neural network
+
+training neural networks
+    train-mnist		Train a neural network on the MNIST dataset
+
+miscellaneous
+    help			Display this message
+    exit			Exit riznets
