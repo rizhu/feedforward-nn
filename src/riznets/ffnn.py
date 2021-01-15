@@ -1,7 +1,7 @@
 import numpy as np
 
-import activation_functions as af
-import loss_functions as lf
+from riznets import activation_functions as af
+from riznets import loss_functions as lf
 
 class FFNN:
 

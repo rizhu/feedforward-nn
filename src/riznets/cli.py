@@ -7,9 +7,9 @@ import tensorflow as tf
 import numpy as np
 import pickle
 
-import ffnn
-import loss_functions as lf
-import activation_functions as af
+from riznets import ffnn
+from riznets import loss_functions as lf
+from riznets import activation_functions as af
 
 CWD = os.getcwd()
 NN_PATH = os.path.join(CWD, "saved-neural-nets")
