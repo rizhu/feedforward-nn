@@ -31,7 +31,7 @@ class FFNN:
             self.activations.append(af.activation[activations[i - 1]])
             self.activations_d.append(af.activation_d[activations[i - 1]])
 
-    def train(self, x: list, y: list, learning_rate: int, loss: str, iterations: int):
+    def train(self, x, y, learning_rate: int, loss: str, iterations: int):
         """
         x:              list of training inputs
         y:              list of training labels
@@ -46,7 +46,7 @@ class FFNN:
         if not x[0].shape[0] == self.weights[1].shape[1]:
             return -2
 
-        print("Beginning training")
+        print("Beginning training...")
 
         z = []
         a = []
@@ -80,9 +80,9 @@ class FFNN:
                 a.clear()
 
             if curr_iteration > 0 and curr_iteration % (iterations / 20) == 0:
-                print(str(int(curr_iteration / iterations * 100)) + "%% complete...")
+                print(f"{int(curr_iteration / iterations * 100)}% complete...")
 
-        print("Finished training")
+        print("Finished training!")
 
     def predict(self, x):
         """
@@ -102,7 +102,7 @@ class FFNN:
             self.weights[i] = np.random.randn(self.weights[i].shape[0], self.weights[i].shape[1]) * (FFNN.sqrt_2 / self.weights[i].shape[1])
             self.biases[i] = np.zeros(self.biases[i].shape[0])
 
-    def test(self, x_test: list, y_test: list):
+    def test_mnist(self, x_test, y_test):
         """
         x_test: list of test inputs
         y_test: list of test labels
@@ -110,15 +110,21 @@ class FFNN:
 
         if not len(x_test) == len(y_test):
             print(f"Dimension mismatch between test inputs and labels. Found {len(x_test)} test inputs and {len(y_test)} labels")
-            return
+            return -1
 
         correct = 0
 
+        print("Beginning testing")
+
         for i in range(len(x_test)):
-            if np.argmax(self.predict(x_test[i])) == np.argmax(y_test[i]):
+            if np.argmax(self.predict(x_test[i])) == y_test[i]:
                 correct += 1
+            if i > 0 and i % (len(x_test) / 20) == 0:
+                print(f"{int(i / len(x_test) * 100)}% complete...")
 
         self.ran_on_test = True
 
+        print("Finished testing!")
+
         print(f"Correctly predicted {correct} out of {len(y_test)} test examples.")
-        print(f"Achieved test accuracy of {(correct / len(y_test)):.4f}%.")
+        print(f"Achieved test accuracy of {(correct / len(y_test) * 100):.4f}%.")
