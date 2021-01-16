@@ -26,7 +26,9 @@ class FFNN:
         self.ran_on_test = False
 
         for i in range(1, len(layer_dims)):
-            self.weights.append(np.random.randn(layer_dims[i], layer_dims[i - 1]) * (FFNN.sqrt_2 / layer_dims[i - 1]))
+            self.weights.append(np.random.randn(layer_dims[i], layer_dims[i - 1]) / layer_dims[i - 1])
+            if activations[i - 1] == "relu":
+                self.weights[i] *= FFNN.sqrt_2
             self.biases.append(np.zeros(layer_dims[i]))
             self.activations.append(af.activation[activations[i - 1]])
             self.activations_d.append(af.activation_d[activations[i - 1]])
@@ -99,7 +101,9 @@ class FFNN:
             return -1
 
         for i in range(1, len(self.weights)):
-            self.weights[i] = np.random.randn(self.weights[i].shape[0], self.weights[i].shape[1]) * (FFNN.sqrt_2 / self.weights[i].shape[1])
+            self.weights[i] = np.random.randn(self.weights[i].shape[0], self.weights[i].shape[1]) / self.weights[i].shape[1]
+            if self.activations[i] == af.relu:
+                self.weights[i] *= FFNN.sqrt_2
             self.biases[i] = np.zeros(self.biases[i].shape[0])
 
     def test_mnist(self, x_test, y_test):
